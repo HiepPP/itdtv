@@ -1,0 +1,33 @@
+﻿@using ssc.consulting.switchboard.Infactractures
+@using ssc.consulting.switchboard.ViewModels
+@model ListMenuAdminViewModel
+
+@{
+    var myuri = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
+    var i = 1;
+
+    var listall = Model.ListMenu.OrderBy(x => x.MenuRoot).ToList();
+    var list = listall.OrderBy(x => x.MenuRoot).GroupBy(x => x.MenuRoot).Select(x => x.First()).ToList();
+    
+}
+
+@foreach (var item in list)
+{
+    var classA = myuri.AbsoluteUri.Contains(item.CodeMenu) ? "" : "collapsed";
+    var classUl = myuri.AbsoluteUri.Contains(item.CodeMenu) ? "in" : "collapse";
+    //var boolaria = myuri.AbsoluteUri.Equals(item.CodeMenu) ? "true" : "false";
+    <li>
+        <a href="javascript:;" data-toggle="collapse" data-target="#demo@(i)" class="@classA">@item.MenuRoot.GetEnumDescription()</a>
+        <ul id="demo@(i)" class="@classUl">
+        @{
+            var item1 = item;
+            var listmenuitem = listall.Where(a => a.MenuRoot == item1.MenuRoot);
+            foreach (var itemmenu in listmenuitem)
+            {
+                <li><a href="@itemmenu.Url">@itemmenu.Name</a></li>
+            }
+        }
+        </ul>
+    </li>
+    i++;
+}

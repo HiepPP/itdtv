@@ -1,0 +1,36 @@
+﻿@using System.Web.Configuration
+@using ssc.consulting.switchboard.Infactractures;
+@model ssc.consulting.switchboard.ViewModels.MainCategoryHomeViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int page = 1;
+    if (Request.QueryString["page"] != null)
+    {
+        page = int.Parse(Request.QueryString["page"].ToString());
+    }
+    var rootthumbnail = WebConfigurationManager.AppSettings["rootimagethumbnail"].ToString();
+    var heightthumbnail = int.Parse(WebConfigurationManager.AppSettings["heightthumbnail"].ToString());
+}
+<div class="panel-body" style="background: rgb(248, 248, 248) none repeat scroll 0 0;">
+    @{
+        foreach (var item in Model.ListNews)
+        {
+            <div class=" col-md-3  col-xs-6  col-sm-4  item-book">
+                <div class="thumbnail">
+                    <a href="@item.SeoName"><img src="@(rootthumbnail + item.Image)" style="overflow: hidden; height: @(heightthumbnail)px"/></a>
+                    <h4 style="text-align:justify"><a href="@item.SeoName">@item.Title</a></h4>
+                    <div class="ratings" style="text-align:justify">
+                        <p>@item.Description</p>
+                    </div>
+                </div>
+            </div>
+        }
+        if(!string.IsNullOrEmpty(Paging.Page(page, Model.TotalRecord)))
+        {
+            <div class="clearfix"></div>
+            <div class="list-group-form">
+                @Html.Raw(Paging.Page(page, Model.TotalRecord))
+            </div>
+        }
+    }
+</div>

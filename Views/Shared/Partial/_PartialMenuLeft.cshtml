@@ -1,0 +1,8 @@
+﻿@model ssc.consulting.switchboard.ViewModels.MenuLeftViewModel
+           
+@{
+    foreach (var item in Model.ListMainCategories)
+    {
+        <div class="panel-body"><a href="@item.SeoName"><i class="glyphicon glyphicon-leaf"></i> @item.Name</a></div>
+    }
+}

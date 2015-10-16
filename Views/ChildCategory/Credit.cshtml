@@ -1,0 +1,64 @@
+﻿@using System.Web.Configuration;
+@using ssc.consulting.switchboard.Infactractures
+@model ssc.consulting.switchboard.Models.ChildCategory
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    string rootimage = WebConfigurationManager.AppSettings["rootimage"].ToString();
+}
+
+<div class="row">
+    <div class="col-lg-12"><h3 class="text-info">@(Model.Id.IsGuidEmpty() ? "Thêm mới Đối tượng" : "Chỉnh sửa Đối tượng")</h3></div>
+</div>
+<div class="row">
+    @using (Html.BeginForm("Credit", "ChildCategory", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                <label class="control-label col-md-3">Tiêu đề</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Name, new { @style = "width: 100%" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Từ khóa</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.SeoName, new { @style = "width: 100%" })
+                    @Html.ValidationMessageFor(model => model.SeoName)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Vị trí</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Position, new { @style = "width: 100%", @type = "number" })
+                    @Html.ValidationMessageFor(model => model.Position)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Trạng thái</label>
+                <div class="col-md-9">
+                    @Html.CheckBoxFor(model => model.IsActive, new { id = "IsActive" })
+                    <label>Hiển thị/Không hiển thi</label>
+                    @Html.ValidationMessageFor(model => model.IsActive)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                    @Html.ActionLink("Trở về danh sách", "Index", null, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

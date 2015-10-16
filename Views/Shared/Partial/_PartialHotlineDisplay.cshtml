@@ -1,0 +1,30 @@
+﻿@model ssc.consulting.switchboard.ViewModels.HotlineDisplayViewModel
+
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner marquee" style="text-transform: uppercase;">
+        @{
+            var i = 0;
+            foreach (var item in Model.ListHotLines)
+            {
+                if (i == 0)
+                {
+                    <div class="item active">
+                        <h4>@(item.Description): <span class="phone">@item.Phone</span></h4>
+                    </div>
+
+                }
+                if (i != 0)
+                {
+                    <div class="item ">
+                        <h4>@(item.Description): <span class="phone">@item.Phone</span></h4> 
+                    </div>
+                }
+                i++;
+            }
+        }
+    </div>
+
+    <!-- Controls -->
+</div> <!-- Carousel -->

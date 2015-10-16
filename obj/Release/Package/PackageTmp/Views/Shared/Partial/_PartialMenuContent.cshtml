@@ -1,0 +1,41 @@
+﻿@model ssc.consulting.switchboard.ViewModels.MenuContentViewModel
+
+@*<ul class="nav nav-tabs">
+    @{
+        var myuri = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
+        var i = 0;
+        foreach (var item in Model.LisChildCategories)
+        {
+            if (myuri.AbsoluteUri.Contains(item.SeoName))
+            {
+                <li class="active"><a class="title_detail" href="@item.SeoName">@item.Name</a></li>
+            }
+            else
+            {
+                <li><a class="title_detail" href="@item.SeoName">@item.Name</a></li>
+            }
+            i++;
+        }
+    }
+</ul>*@
+
+<table style="width: 100%; background: #00a2e8 none repeat scroll 0 0;">
+    <tr>
+        @{
+            var myuri = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
+            var i = 0;
+            foreach (var item in Model.LisChildCategories)
+            {
+                if (myuri.AbsoluteUri.Contains(item.SeoName))
+                {
+                    <td class="tdmenucontent active"><a href="@item.SeoName">@item.Name</a></td>
+                }
+                else
+                {
+                    <td class="tdmenucontent"><a href="@item.SeoName">@item.Name</a></td>
+                }
+                i++;
+            }
+}
+    </tr>
+</table>

@@ -1,0 +1,61 @@
+﻿@model ssc.consulting.switchboard.ViewModels.BannerDisplayViewModel
+
+
+@*<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        @{
+            var a = 0;
+            foreach (var item in Model.ListBanners)
+            {
+                if (a == 0)
+                {
+                    <li data-target="#myCarousel" data-slide-to="@a" class="active"></li>
+                }
+                if (a != 0)
+                {
+                    <li data-target="#myCarousel" data-slide-to="@a"></li>
+                }
+                a++;
+            }
+        }
+    </ol>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        @{
+            int i = 0;
+            foreach (var item in Model.ListBanners)
+            {
+                if (i == 0)
+                {
+                    <div class="item active">
+                        <img src="/Upload/Image/@item.ImageUrl" alt="Chania">
+                    </div>
+
+                }
+                if (i != 0)
+                {
+                    <div class="item ">
+                        <img src="/Upload/Image/@item.ImageUrl" alt="Chania">
+                    </div>
+                }
+                i++;
+            }
+        }
+    </div>
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
+</div>*@
+<div id="wrapper">
+    <div class="slider-wrapper theme-default">
+        <div id="slider" class="nivoSlider">
+            @{
+                foreach (var item in Model.ListBanners)
+                {
+                    <img src="/Upload/Image/@item.ImageUrl" data-thumb="/Upload/Image/@item.ImageUrl" alt="" />
+                }
+            }
+        </div>
+    </div>
+</div>

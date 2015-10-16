@@ -1,0 +1,103 @@
+﻿@using System.Web.Configuration;
+@using ssc.consulting.switchboard.Infactractures
+@model ssc.consulting.switchboard.ViewModels.NewsModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var rootthumbnail = WebConfigurationManager.AppSettings["rootimagethumbnail"].ToString();
+}
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<script src="~/Scripts/ckeditor/styles.js"></script>
+
+<div class="row">
+    <div class="col-lg-12"><h3 class="text-info">@(Model.Id.IsGuidEmpty() ? "Thêm mới Tin tức" : "Chỉnh sửa Tin tức")</h3></div>
+</div>
+<div class="row">
+    @using (Html.BeginForm("Credit", "News", FormMethod.Post, new { EncType = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Tiêu đề</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Title, new {@style = "width: 100%"})
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+                <label class="control-label col-md-2">Từ khóa</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.SeoName, new {@style = "width: 100%"})
+                    @Html.ValidationMessageFor(model => model.SeoName)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Đối tác</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.MainCategoryId, new SelectList(Model.ListMainCategory, "Id", "Name"), new { Model.MainCategoryId })
+                    @Html.ValidationMessageFor(model => model.MainCategoryId)
+                </div>
+                <label class="control-label col-md-2">Đối tượng</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.ChildCategoryId, new SelectList(Model.ListChildCategory, "Id", "Name"), new { Model.ChildCategoryId })
+                    @Html.ValidationMessageFor(model => model.ChildCategoryId)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Vị trí</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Position, new { @style = "width: 100%", @type = "number" })
+                    @Html.ValidationMessageFor(model => model.Position)
+                </div>
+                <label class="control-label col-md-2">Trạng thái</label>
+                <div class="col-md-4">
+                    @Html.CheckBoxFor(model => model.IsActive, new {id = "IsActive"})
+                    <label>Hiển thị/Không hiển thi</label>
+                    @Html.ValidationMessageFor(model => model.IsActive)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Mô tả</label>
+                <div class="col-md-4">
+                    @Html.TextAreaFor(model => model.Description, new {@style = "width: 100%; height: 90px;"})
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+                <label class="control-label col-md-2">Hình ảnh</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Image, new {@type = "file", @style = "width: 100%"})
+                    @if (!string.IsNullOrWhiteSpace(Model.Image))
+                    {
+                        <img src="@(rootthumbnail + Model.Image)" class="thumbnail"/>
+                    }
+                    @Html.ValidationMessageFor(model => model.Image)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Nội dung</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Contents, new { @style = "width: 100%" })
+                    @Html.ValidationMessageFor(model => model.Contents)
+                    <script>
+                        CKEDITOR.replace('Contents');
+                    </script>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                    @Html.ActionLink("Trở về danh sách", "Index", null, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

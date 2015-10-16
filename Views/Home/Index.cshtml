@@ -1,0 +1,23 @@
+﻿@using System.Web.Configuration
+@model ssc.consulting.switchboard.ViewModels.HomeViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var rootthumbnail = WebConfigurationManager.AppSettings["rootimagethumbnail"].ToString();
+    var heightthumbnail = int.Parse(WebConfigurationManager.AppSettings["heightthumbnail"].ToString());
+}
+<div class="panel-body" style="background: rgb(248, 248, 248) none repeat scroll 0 0;">
+    @{
+        foreach (var item in Model.ListNews)
+        {
+            <div class=" col-md-3  col-xs-6  col-sm-4  item-book">
+                <div class="thumbnail">
+                    <a href="@item.SeoName"><img src="@(rootthumbnail + item.Image)" style="overflow: hidden; height: @(heightthumbnail)px" /></a>
+                    <h4 style="text-align:justify"><a href="@item.SeoName">@item.Title</a></h4>
+                    <div class="ratings" style="text-align:justify">
+                        <p>@item.Description</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

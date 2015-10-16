@@ -1,0 +1,15 @@
+﻿@using ssc.consulting.switchboard.Infactractures;
+@model ssc.consulting.switchboard.Models.News
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel-body" style="background: rgb(248, 248, 248) none repeat scroll 0 0;">
+    <h3 class="text-info">@Model.Title</h3>
+    <div class="col-sm-12 col-md-5">
+        <img src="/Upload/Image/@Model.Image" class="img-thumbnail" />
+    </div>
+    <div class="col-sm-12 col-md-7" style="text-align:justify"><b>@Model.Description</b></div>
+    <div class="col-sm-12 col-md-12" style="text-align:justify; padding-top:10px;">
+        @Html.Raw(Model.Contents)
+    </div>
+</div>

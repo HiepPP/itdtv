@@ -1,0 +1,122 @@
+﻿@using ssc.consulting.switchboard.Infactractures
+@using ssc.consulting.switchboard.ViewModels
+
+@{
+    if (Session["IsLoggedIn"] == null || Session["IsLoggedIn"].ToString() == "false")
+    {
+        Response.Redirect("/Auth/Login");
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Quản lý admin</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/Content/site.css" rel="stylesheet">
+
+        <link href="/Content/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/Content/sb-admin.css" rel="stylesheet">
+
+        <!-- Morris Charts CSS -->
+        <link href="/Content/plugins/morris.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="/Content/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <style type="text/css">
+            body, td, th {
+                font-family: Arial, Helvetica, sans-serif;
+            }
+        </style>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body>
+        <div class="row page-header">
+            <div class="col-md-8"><h3>Quản lý thông tin tư vấn du học</h3></div>
+            <div class="col-md-4" style="text-align: right">
+                <a class="btn btn-default" href="/Admin/Logout"><i class="fa fa-user"></i> Thoát</a>
+            </div>
+        </div>
+
+        <div id="wrapper" class="active">
+
+            <div id="sidebar-wrapper">
+
+                <div class="sidebar-nav collapse navbar-collapse navbar-ex1-collapse" id="sidebar">
+                    <ul class="nav navbar-nav side-nav" style="margin: 0px;">
+                        <li class="sidebar-brand">
+                            <div class="button_menu">
+                                <a id="menu-toggle" href="#">
+                                    <span id="main_icon" class="glyphicon glyphicon-align-justify"></span>
+                                    <span id="main_icon"><small style="margin-left: 5px;">MENU Quản lý</small></span>
+                                </a>
+                            </div>
+                        </li>
+                        @Html.Partial("Partial/_PartialMenuAdmin", new ListMenuAdminViewModel())
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page content -->
+            <div id="page-content-wrapper">
+                <!-- Keep all page content within the page-content inset div! -->
+                <div id="page-wrapper">
+
+                    <div class="container-fluid">
+                        <!-- Page Heading -->
+                        @{
+                            if (Session["PageTransaction"] != null)
+                            {
+                                var message = (PageTransactionSession)Session["PageTransaction"];
+                                Session.Remove("PageTransaction");
+                                <div class="alert @(message.IsSuccess ? "alert-success" : "alert-danger")">@message.Message</div>
+                            }
+                        }
+                        @RenderBody()
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid -->
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- /#wrapper -->
+        <!-- jQuery -->
+        <script src="/Scripts/jquery-1.10.2.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="/Scripts/bootstrap.min.js"></script>
+
+        <!-- Morris Charts JavaScript -->
+        <script src="/Scripts/plugins/raphael.min.js"></script>
+        <script src="/Scripts/plugins/morris.min.js"></script>
+        <script src="/Scripts/plugins/morris-data.js"></script>
+
+        @RenderSection("scripts", required: false)
+
+    </body>
+
+</html>
